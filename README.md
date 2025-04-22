@@ -1,2 +1,2 @@
 # set08801
-This repository is for webtechnologies
+This repository is for web technologies
