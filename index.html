@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+  <div id="map" style="width:100%; max-width: 900px; height: 600px; margin: auto;"></div>
+
 <header>
   <h1>Eurotransfer 🌍</h1>
   <nav>
@@ -28,4 +31,14 @@
   <p>&copy; 2025 Eurotransfer</p>
 </footer>
 </body>
+
+<!-- Load the map config first -->
+<script src="mapdata.js"></script>
+
+<!-- Load the SimpleMaps engine -->
+<script src="js/europemap.js"></script>
+
+<!-- Load your translation logic -->
+<script src="js/main.js"></script>
+
 </html>
