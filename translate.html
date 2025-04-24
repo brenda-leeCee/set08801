@@ -22,12 +22,22 @@
     <button onclick="translateWord()">Translate</button>
 
     <div id="resultsContainer"></div>
+
+    <div id="map" style="width:100%; max-width: 900px; height: 600px; margin: auto;"></div>
+
 </main>
 
 <footer>
     <p>&copy; 2025 Eurotransfer</p>
 </footer>
+<!-- Load the map config first -->
+<script src="mapdata.js"></script>
 
-<script src="js/main.js"></script>
+<!-- Load the SimpleMaps engine -->
+<script src="europemap.js"></script>
+
+<!-- Load your translation logic -->
+<script src="Javascript/main.js"></script>
+
 </body>
 </html>
