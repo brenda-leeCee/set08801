@@ -8,7 +8,7 @@ const languages = {
     sv: "Swedish",
     pt: "Portuguese"
   };
-  
+
 const langToCountryCode = {
     fr: "FR",
     de: "DE",
@@ -21,39 +21,52 @@ const langToCountryCode = {
   };
   
   async function translateWord() {
-    const word = document.getElementById("wordInput").value.trim();
-    if (!word) {
-      alert("Please enter a word to translate.");
-      return;
-    }
-  
-    for (const [langCode, countryCode] of Object.entries(langToCountryCode)) {
-      try {
-        const response = await fetch("https://libretranslate.com/translate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            q: word,
-            source: "en",
-            target: langCode,
-            format: "text"
-          })
-        });
-  
-        const data = await response.json();
-        const translation = data.translatedText;
-  
-        // Add label directly to map
-        createOrUpdateLabel(countryCode, translation);
-  
-      } catch (error) {
-        console.error(`Error translating for ${countryCode}:`, error);
-        createOrUpdateLabel(countryCode, "❌");
-      }
-    }
-  
-    simplemaps_europemap.load(); // Refresh the map
+  const word = document.getElementById("wordInput").value.trim();
+  if (!word) {
+    alert("Please enter a word to translate.");
+    return;
   }
+
+  // Clear previous labels
+  const oldLabels = document.querySelectorAll("[id^='label-']");
+  oldLabels.forEach(label => label.remove());
+
+  // Translate and wait for map SVG to be ready
+  for (const [langCode, countryCode] of Object.entries(langToCountryCode)) {
+    try {
+      const response = await fetch("https://libretranslate.com/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          q: word,
+          source: "en",
+          target: langCode,
+          format: "text"
+        })
+      });
+
+      const data = await response.json();
+      const translation = data.translatedText;
+
+      simplemaps_europemap_mapdata.state_specific[countryCode].description = translation;
+    } catch (error) {
+      console.error(`Error translating for ${countryCode}:`, error);
+      simplemaps_europemap_mapdata.state_specific[countryCode].description = "❌";
+    }
+  }
+
+  // Reload the map and then add labels
+  simplemaps_europemap.load();
+
+  // Wait a tiny bit for SVG to render, then inject text
+  setTimeout(() => {
+    for (const [langCode, countryCode] of Object.entries(langToCountryCode)) {
+      const desc = simplemaps_europemap_mapdata.state_specific[countryCode].description;
+      if (desc) createOrUpdateLabel(countryCode, desc);
+    }
+  }, 300); // Wait 300ms
+}
+
   
   function createOrUpdateLabel(countryCode, translation) {
     const mapSvg = document.querySelector("#map svg");
