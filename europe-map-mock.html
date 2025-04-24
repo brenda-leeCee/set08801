@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="style.css">
+ 
+<head>
+  <meta charset="UTF-8">
+  <title>Europe Translation Map (Mock Version)</title>
+  
+</head>
+<body>
+  <h1>Translate Across Europe 🌍</h1>
+  <input type="text" id="wordInput" placeholder="Enter a word...">
+  <button onclick="translateWord()">Translate</button>
+
+  <div class="map-wrapper">
+    <img src="europe.png" alt="Europe Map">
+
+    <div class="label" id="label-FR" style="top: 58%; left: 32%;">FR</div>
+    <div class="label" id="label-DE" style="top: 46%; left: 39%;">DE</div>
+    <div class="label" id="label-ES" style="top: 68%; left: 22%;">ES</div>
+    <div class="label" id="label-IT" style="top: 66%; left: 41%;">IT</div>
+    <div class="label" id="label-PL" style="top: 41%; left: 45%;">PL</div>
+    <div class="label" id="label-NL" style="top: 43%; left: 36%;">NL</div>
+    <div class="label" id="label-SE" style="top: 20%; left: 43%;">SE</div>
+    <div class="label" id="label-PT" style="top: 71%; left: 18%;">PT</div>
+  </div>
+
+  <script>
+    const langToCountryCode = {
+      fr: "FR",
+      de: "DE",
+      es: "ES",
+      it: "IT",
+      pl: "PL",
+      nl: "NL",
+      sv: "SE",
+      pt: "PT"
+    };
+
+    function translateWord() {
+      const word = document.getElementById("wordInput").value.trim();
+      if (!word) {
+        alert("Please enter a word to translate.");
+        return;
+      }
+
+      // Mock translations for demo/testing
+      const mockTranslations = {
+        fr: "Bonjour",
+        de: "Hallo",
+        es: "Hola",
+        it: "Ciao",
+        pl: "Cześć",
+        nl: "Hallo",
+        sv: "Hej",
+        pt: "Olá"
+      };
+
+      for (const [langCode, countryCode] of Object.entries(langToCountryCode)) {
+        const translation = mockTranslations[langCode];
+        document.getElementById("label-" + countryCode).textContent = translation;
+      }
+    }
+  </script>
+</body>
+</html>
