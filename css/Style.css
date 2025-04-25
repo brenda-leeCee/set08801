@@ -13,6 +13,12 @@ body {
     height: auto;
     display: block;
   }
+.map-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 5 / 3; /* Add this line to enforce space */
+}
   .label {
     position: absolute;
     font-size: 14px;
